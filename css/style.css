@@ -1,0 +1,1106 @@
+/* ==========================================================================
+   Design tokens — flat, monochrome, editorial. No radius, no shadow, no cards.
+   ========================================================================== */
+:root {
+  --color-bg: #FAFAF8;
+  --color-ink: #111110;
+  --color-ink-soft: #6E6E6A;
+  --color-ink-faint: #A8A7A2;
+  --color-line: #DBDAD5;
+  --color-accent: #FC394A;
+  --bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --color-media-bg: #E8E7E2;
+
+  --font-display: "Space Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "IBM Plex Mono", "SF Mono", monospace;
+
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.75rem;
+  --space-4: 3rem;
+  --space-5: 5rem;
+  --space-6: 8rem;
+  --space-7: 12rem;
+
+  --max-width: 1240px;
+  --gutter: 1.75rem;
+  --ease: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* Shared measure — all case-study content fills the modal body width and
+     grows fluidly when the overlay is expanded/maximized */
+  --cs-measure: 100%;
+}
+
+/* ==========================================================================
+   Reset
+   ========================================================================== */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+h1, h2, h3, h4, p, figure { margin: 0; }
+ul { margin: 0; padding: 0; list-style: none; }
+button { font: inherit; cursor: pointer; background: none; border: none; color: inherit; }
+
+.wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: 0.75rem;
+}
+
+/* ==========================================================================
+   Type
+   ========================================================================== */
+h1, .h1 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2.25rem, 4.6vw, 4rem);
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+}
+h2, .h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+}
+h3, .h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.5rem, 2.2vw, 1.75rem);
+  line-height: 1.1;
+}
+.lede {
+  font-size: clamp(1rem, 1.3vw, 1.15rem);
+  color: var(--color-ink-soft);
+  line-height: 1.5;
+  max-width: 54ch;
+}
+
+/* "trust" paints on letter by letter in the accent color, then stays */
+.paint-word span {
+  color: inherit;
+  animation: paint-letter 0.4s var(--ease) forwards;
+}
+.paint-word span:nth-child(1) { animation-delay: 1.0s; }
+.paint-word span:nth-child(2) { animation-delay: 1.12s; }
+.paint-word span:nth-child(3) { animation-delay: 1.24s; }
+.paint-word span:nth-child(4) { animation-delay: 1.36s; }
+.paint-word span:nth-child(5) { animation-delay: 1.48s; }
+@keyframes paint-letter {
+  to { color: var(--color-accent); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .paint-word span { animation: none; color: var(--color-accent); }
+}
+
+/* ==========================================================================
+   Nav — floating bar, light translucent background
+   ========================================================================== */
+.site-nav {
+  position: fixed;
+  top: var(--space-2); left: var(--space-2); right: var(--space-2);
+  z-index: 50;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.85rem 1.375rem;
+  background: rgba(250, 250, 248, 0.78);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--color-line);
+  border-radius: 14px;
+  box-shadow: 0 10px 24px rgba(17, 17, 16, 0.03);
+}
+.site-nav .logo {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  transition: color 0.2s var(--ease);
+}
+.site-nav .logo:hover { color: var(--color-accent); }
+.nav-links {
+  display: flex;
+  gap: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.nav-links a {
+  display: flex;
+  align-items: center;
+  color: var(--color-ink-soft);
+  transition: color 0.2s var(--ease);
+}
+.nav-links a::before {
+  content: "";
+  width: 0;
+  min-width: 0;
+  height: 6px;
+  min-height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  opacity: 0;
+  margin-right: 0;
+  flex-shrink: 0;
+  transition: width 0.35s var(--bounce), min-width 0.35s var(--bounce),
+              margin-right 0.35s var(--bounce), opacity 0.25s var(--ease);
+}
+.nav-links a.active {
+  color: var(--color-accent);
+}
+.nav-links a.active::before,
+.nav-links a:hover::before {
+  width: 6px;
+  min-width: 6px;
+  opacity: 1;
+  margin-right: 8px;
+}
+.nav-links a:hover {
+  color: var(--color-accent);
+}
+
+.nav-toggle {
+  display: none;
+  padding: 4px;
+}
+.nav-toggle span,
+.nav-toggle span::before,
+.nav-toggle span::after {
+  content: "";
+  display: block;
+  width: 20px;
+  height: 1px;
+  background: var(--color-ink);
+  position: relative;
+  transition: transform 0.2s var(--ease), background 0.2s var(--ease);
+}
+.nav-toggle span::before { position: absolute; top: -6px; }
+.nav-toggle span::after { position: absolute; top: 6px; }
+
+/* ==========================================================================
+   Hero — full statement, minimal support
+   ========================================================================== */
+.hero {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: var(--space-6);
+  padding-bottom: var(--space-5);
+}
+.hero .mono { color: var(--color-ink-soft); margin-bottom: var(--space-3); }
+.hero h1 { max-width: 18ch; }
+.hero .lede { margin-top: var(--space-4); }
+.hero .scroll-cue {
+  margin-top: var(--space-5);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--color-ink-faint);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+/* ==========================================================================
+   Work index — text list, no thumbnails inline. Numbers + titles + years.
+   ========================================================================== */
+.work-index {
+  padding-top: var(--space-5);
+  padding-bottom: var(--space-6);
+  scroll-margin-top: 90px;
+}
+.work-index-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: var(--space-4);
+}
+.work-index-head .mono { color: var(--color-ink-soft); }
+
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.work-row {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  padding: 0 var(--space-3);
+  margin: 0 calc(-1 * var(--space-3));
+  border-top: 1px solid var(--color-line);
+  border-bottom: 1px solid transparent;
+  cursor: pointer;
+  transition: border-color 0.4s var(--ease);
+}
+.work-row:last-child { border-bottom-color: var(--color-line); }
+/* Revealed state — shared by desktop hover and the mobile scroll-reveal
+   (js/main.js lights one row at a time on touch, since hover isn't available). */
+.work-row.revealed { border-top-color: transparent; border-bottom-color: transparent; }
+.work-row.revealed + .work-row { border-top-color: transparent; }
+
+.work-row .row-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0;
+  border-radius: 0;
+  overflow: hidden;
+  transition: opacity 0.4s var(--ease), border-radius 0.4s var(--ease);
+}
+.work-row .row-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.work-row .row-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(17, 17, 16, 0.5);
+}
+.work-row.revealed .row-bg { opacity: 1; }
+
+.work-row .row-content {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 4rem 1fr auto;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+}
+.work-row .index-num {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--color-ink-faint);
+  transition: color 0.3s var(--ease);
+}
+.work-row .index-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3.2vw, 2.375rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  transition: color 0.3s var(--ease);
+}
+.work-row .index-year {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--color-ink-soft);
+  white-space: nowrap;
+  transition: color 0.3s var(--ease);
+}
+.work-row .index-theme {
+  grid-column: 2 / 3;
+  color: var(--color-ink-soft);
+  font-size: 0.9375rem;
+  margin-top: 4px;
+  transition: color 0.3s var(--ease);
+}
+.work-row.revealed .index-num,
+.work-row.revealed .index-title,
+.work-row.revealed .index-year,
+.work-row.revealed .index-theme {
+  color: #F4F3EF;
+}
+
+/* Desktop (real pointer): reveal on hover, with rounded corners. Gated so
+   touch devices skip the sticky-hover that would need a double-tap to open. */
+@media (hover: hover) {
+  .work-row:hover { border-top-color: transparent; border-bottom-color: transparent; }
+  .work-row:hover + .work-row { border-top-color: transparent; }
+  .work-row:hover .row-bg { opacity: 1; border-radius: 28px; }
+  .work-row:hover .index-num,
+  .work-row:hover .index-title,
+  .work-row:hover .index-year,
+  .work-row:hover .index-theme { color: #F4F3EF; }
+}
+
+/* ==========================================================================
+   Reveal — fade-in-up as content enters (page load or scroll)
+   ========================================================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+}
+.reveal.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* ==========================================================================
+   Bubble link — replaces arrow glyphs with a circle that pops in on hover
+   ========================================================================== */
+.bubble-link {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  transition: color 0.2s var(--ease);
+}
+.bubble-link .bubble {
+  order: -1;
+  width: 0;
+  min-width: 0;
+  height: 0.4em;
+  min-height: 9px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  opacity: 0;
+  margin-right: 0;
+  flex-shrink: 0;
+  transition: width 0.35s var(--bounce), min-width 0.35s var(--bounce),
+              margin-right 0.35s var(--bounce), opacity 0.25s var(--ease);
+}
+.bubble-link:hover .bubble,
+.bubble-link:focus-visible .bubble {
+  width: 0.4em;
+  min-width: 9px;
+  opacity: 1;
+  margin-right: 0.35em;
+}
+.bubble-link:hover,
+.bubble-link:focus-visible {
+  color: var(--color-accent);
+}
+/* Auto-reveal the "Download CV" link once the timeline finishes charging —
+   same effect as a hover, driven by js/main.js. Resets when scrolled away. */
+.bubble-link.cv-charged {
+  color: var(--color-accent);
+}
+.bubble-link.cv-charged .bubble {
+  width: 0.4em;
+  min-width: 9px;
+  opacity: 1;
+  margin-right: 0.35em;
+}
+
+/* ==========================================================================
+   Closing / footer — a statement, not a dashboard
+   ========================================================================== */
+.closing {
+  padding-top: var(--space-6);
+  padding-bottom: var(--space-4);
+}
+.closing a.big-link {
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 5.2vw, 3.75rem);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+/* Auto-reveal the CTA when it scrolls into view (signals it's a link) */
+.closing a.big-link.cta-in { color: var(--color-accent); }
+.closing a.big-link.cta-in .bubble {
+  width: 0.4em;
+  min-width: 9px;
+  opacity: 1;
+  margin-right: 0.35em;
+}
+
+.site-footer {
+  padding-top: var(--space-4);
+  padding-bottom: var(--space-4);
+}
+.footer-line {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--color-ink-soft);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: var(--space-2);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-line);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.footer-line > span:first-child { justify-self: start; }
+.footer-line > span:nth-child(2) { justify-self: center; }
+.footer-line > span:last-child { justify-self: end; }
+.footer-line a { color: var(--color-ink-soft); }
+.footer-line a:hover { color: var(--color-accent); }
+.footer-line .sep { margin: 0 var(--space-1); color: var(--color-ink-faint); }
+
+.live-dot {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  top: -0.06em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  margin-right: 8px;
+  animation: live-pulse 1.6s ease-in-out infinite;
+}
+@keyframes live-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.12; }
+}
+
+/* ==========================================================================
+   Case study — single column, long-form
+   ========================================================================== */
+.cs-top {
+  padding: calc(var(--space-6) + var(--space-2)) 0 var(--space-4);
+}
+.cs-back {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-ink-soft);
+}
+.cs-back:hover { color: var(--color-ink); }
+
+.cs-title { max-width: 22ch; margin: var(--space-2) 0 var(--space-4); }
+
+/* Discipline eyebrows — the project's core, above the title */
+.cs-disciplines {
+  color: var(--color-ink-soft);
+  max-width: var(--cs-measure);
+  white-space: nowrap;
+}
+
+/* Facts — labeled Role / Timeline / Team block */
+.cs-facts {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  column-gap: var(--space-4);
+  row-gap: var(--space-2);
+  padding: var(--space-3) 0;
+  border-top: 1px solid var(--color-line);
+  border-bottom: 1px solid var(--color-line);
+  max-width: var(--cs-measure);
+}
+.cs-fact { display: flex; flex-direction: column; gap: 7px; }
+.cs-fact-label { color: var(--color-ink-faint); }
+.cs-fact-value { font-size: 0.9375rem; color: var(--color-ink); line-height: 1.4; white-space: nowrap; }
+.cs-fact-value a { text-decoration: underline; text-underline-offset: 2px; transition: color 0.2s var(--ease); }
+.cs-fact-value a:hover { color: var(--color-accent); }
+@media (max-width: 640px) {
+  .cs-facts { grid-template-columns: 1fr; }
+  .cs-fact-value { white-space: normal; }
+  .cs-disciplines { white-space: normal; }
+}
+
+.cs-overview {
+  padding: var(--space-4) 0;
+  max-width: var(--cs-measure);
+}
+
+.cs-media {
+  margin: var(--space-3) 0;
+  max-width: var(--cs-measure);
+}
+.cs-media img, .cs-media video { width: 100%; display: block; background: var(--color-media-bg); }
+
+/* Chibinski's storefront shots have a pale background that blends into the
+   page — a hairline stroke defines their edges. Scoped to this case only. */
+.cs-modal-body[data-case="chibinski"] .cs-media img,
+.cs-modal-body[data-case="chibinski"] .cs-media video {
+  border: 1px solid #F4F2EF;
+  box-sizing: border-box;
+}
+
+/* Every case-study image/video is click/tap-to-enlarge. The wrapper shrink-
+   wraps its media (so the corner icon sits on the image, not the column) and
+   carries a subtle expand affordance. */
+.cs-zoom { position: relative; display: block; cursor: zoom-in; line-height: 0; }
+.cs-media.row .cs-zoom, .cs-media.split.mobile .cs-zoom { display: inline-block; }
+.cs-zoom:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+.cs-zoom-ic {
+  position: absolute; right: 10px; bottom: 10px;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 30px; height: 30px; border-radius: 999px;
+  background: rgba(17, 17, 16, 0.6); color: #fff;
+  pointer-events: none; opacity: 0; transition: opacity 0.3s var(--ease);
+}
+.cs-zoom-ic svg { width: 14px; height: 14px; }
+.cs-zoom:hover .cs-zoom-ic, .cs-zoom:focus-visible .cs-zoom-ic { opacity: 1; }
+/* Touch devices have no hover, so keep the affordance faintly visible there. */
+@media (hover: none) { .cs-zoom-ic { opacity: 0.85; } }
+
+/* Enlarged media overlay — sits above the case-study modal. */
+.cs-lightbox {
+  position: fixed; inset: 0; z-index: 200;
+  display: none; align-items: center; justify-content: center;
+  padding: 24px; background: rgba(12, 12, 11, 0.97);
+}
+.cs-lightbox.open { display: flex; }
+.cs-lightbox-content { display: flex; align-items: center; justify-content: center; max-width: 96vw; max-height: 92vh; }
+.cs-lightbox-content img, .cs-lightbox-content video {
+  max-width: 96vw; max-height: 92vh; width: auto; height: auto; display: block; object-fit: contain;
+}
+.cs-lightbox-close {
+  position: fixed; top: 16px; right: 16px; z-index: 1;
+  width: 44px; height: 44px; border-radius: 999px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: rgba(255, 255, 255, 0.12); color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.25); cursor: pointer;
+  transition: background 0.2s var(--ease);
+}
+.cs-lightbox-close:hover { background: rgba(255, 255, 255, 0.24); }
+.cs-lightbox-close svg { width: 18px; height: 18px; }
+body.lightbox-open { overflow: hidden; }
+.cs-media.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: transparent;
+}
+.cs-media.split > div { background: var(--color-media-bg); overflow: hidden; }
+
+/* Portrait phone screenshots — shorter, centered, with breathing room between */
+.cs-media.split.mobile { gap: var(--space-4); }
+.cs-media.split.mobile > div {
+  background: transparent;
+  display: flex;
+  justify-content: center;
+}
+.cs-media.split.mobile img { width: auto; max-height: 460px; }
+
+/* A centered row of phone screenshots (e.g. a mobile filtering flow) */
+.cs-media.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  justify-content: center;
+  align-items: flex-start;
+  background: transparent;
+}
+.cs-media.row > div { display: flex; justify-content: center; }
+.cs-media.row img,
+.cs-media.row video { height: 430px; width: auto; max-width: 100%; display: block; }
+.cs-media.row video { background: var(--color-media-bg); }
+/* When the overlay is expanded full-screen, show more of each phone screen */
+.cs-modal.maximized .cs-media.row img,
+.cs-modal.maximized .cs-media.row video { height: 680px; }
+.cs-media.row .ph-cell {
+  width: 198px;
+  height: 430px;
+  background: var(--color-media-bg);
+  border: 1px dashed var(--color-line);
+  align-items: center;
+  padding: var(--space-2);
+}
+
+/* On phones, a row of 2+ phone screens becomes a horizontal snap-carousel with
+   the next item peeking, so it reads as swipeable instead of stacking. */
+@media (max-width: 640px) {
+  .cs-media.row:has(> div + div) {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: var(--space-2);
+    scrollbar-width: none;
+  }
+  .cs-media.row:has(> div + div)::-webkit-scrollbar { display: none; }
+  .cs-media.row:has(> div + div) > div {
+    flex: 0 0 70%;
+    scroll-snap-align: start;
+  }
+  .cs-media.row:has(> div + div) .cs-zoom { display: block; width: 100%; }
+  .cs-media.row:has(> div + div) img,
+  .cs-media.row:has(> div + div) video { height: auto; width: 100%; max-width: 100%; }
+}
+
+.cs-chapter {
+  padding: var(--space-5) 0 var(--space-2);
+  max-width: var(--cs-measure);
+}
+/* Divider sits below each section heading */
+.cs-chapter .mono {
+  color: var(--color-ink-soft);
+  padding-bottom: var(--space-2);
+  margin-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-line);
+}
+.cs-chapter p { color: var(--color-ink-soft); }
+.cs-chapter p + p { margin-top: 1.4rem; }
+.cs-chapter-media { max-width: none; }
+
+/* Pull-quote — the core-problem statement, marked with an accent bullet */
+.cs-quote {
+  position: relative;
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2.4vw, 1.5rem);
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+  margin: 0 0 1.4rem;
+  padding-left: calc(0.5em + var(--space-2));
+}
+.cs-quote::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.5em;
+  width: 0.5em;
+  height: 0.5em;
+  min-width: 10px;
+  min-height: 10px;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+/* Bold-lead point list — reuses the "What I bring" pattern for case chapters */
+.cs-points {
+  margin-top: var(--space-2);
+}
+.cs-points li {
+  padding-bottom: var(--space-2);
+  color: var(--color-ink-soft);
+  line-height: 1.55;
+}
+.cs-points li:last-child { padding-bottom: 0; }
+.cs-points li strong {
+  display: block;
+  color: var(--color-ink);
+  font-weight: 600;
+  margin-bottom: 3px;
+}
+/* Point rendered as a block (bold title + text) with its own image below */
+.cs-point-block {
+  max-width: var(--cs-measure);
+  margin-top: var(--space-4);
+}
+.cs-point-block strong {
+  display: block;
+  color: var(--color-ink);
+  font-weight: 600;
+  margin-bottom: 3px;
+}
+.cs-point-block p { color: var(--color-ink-soft); line-height: 1.55; }
+/* Note / footnote — always the same faint grey, whatever precedes it.
+   Scoped to .cs-chapter so it wins over the body-paragraph colour rule. */
+.cs-chapter .cs-footnote,
+.cs-footnote {
+  margin-top: var(--space-3);
+  font-size: 0.875rem;
+  color: var(--color-ink-faint);
+  line-height: 1.55;
+}
+/* Closing paragraph after the points — full-weight body text, not a footnote. */
+.cs-close {
+  margin-top: var(--space-3);
+  color: var(--color-ink-soft);
+  line-height: 1.55;
+}
+
+/* Labeled image placeholders — name the screen/photo that belongs here */
+.cs-media.placeholder {
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: var(--color-media-bg);
+  border: 1px dashed var(--color-line);
+  padding: var(--space-4);
+}
+.cs-media.split .ph-cell {
+  background: var(--color-media-bg);
+  aspect-ratio: 4 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 1px dashed var(--color-line);
+  padding: var(--space-3);
+}
+.ph { display: flex; flex-direction: column; align-items: center; gap: 8px; max-width: 40ch; }
+.ph-tag {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-accent);
+}
+.ph-note {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--color-ink-soft);
+}
+.cs-caption {
+  font-size: 0.875rem;
+  color: var(--color-ink-faint);
+  line-height: 1.55;
+  margin-top: var(--space-2);
+  text-align: left;
+}
+
+.cs-nextprev {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  border-top: 1px solid var(--color-line);
+  padding: var(--space-5) 0 var(--space-4);
+  max-width: var(--cs-measure);
+}
+.cs-nextprev-item .mono { display: block; color: var(--color-ink-soft); margin-bottom: var(--space-2); }
+.cs-nextprev-item button.bubble-link {
+  font-family: var(--font-display);
+  font-size: clamp(1.375rem, 3vw, 2rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  text-align: left;
+}
+.cs-nextprev-item:last-child { text-align: right; }
+.cs-nextprev-item:last-child .mono { text-align: right; }
+.cs-nextprev-item:last-child button.bubble-link { margin-left: auto; }
+@media (max-width: 700px) {
+  .cs-nextprev { grid-template-columns: 1fr; gap: var(--space-3); }
+  .cs-nextprev-item:last-child { text-align: left; }
+  .cs-nextprev-item:last-child .mono { text-align: left; }
+  .cs-nextprev-item:last-child button.bubble-link { margin-left: 0; }
+}
+
+/* ==========================================================================
+   Case study modal — a "box" that floats over the homepage
+   ========================================================================== */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: rgba(17, 17, 16, 0.5);
+  backdrop-filter: blur(3px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease);
+}
+.modal-backdrop.open { opacity: 1; pointer-events: auto; }
+
+body.modal-open { overflow: hidden; }
+
+.cs-modal {
+  position: fixed;
+  top: 6vh;
+  left: 50%;
+  width: min(940px, 92vw);
+  max-height: 88vh;
+  background: var(--color-bg);
+  border-radius: 18px;
+  box-shadow: 0 40px 100px rgba(17, 17, 16, 0.28);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 12px);
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease),
+              width 0.35s var(--ease), max-height 0.35s var(--ease),
+              top 0.35s var(--ease), border-radius 0.3s var(--ease);
+  z-index: 91;
+}
+.cs-modal.open { opacity: 1; pointer-events: auto; transform: translate(-50%, 0); }
+.cs-modal.maximized {
+  top: 0;
+  left: 50%;
+  width: 100vw;
+  max-height: 100vh;
+  height: 100vh;
+  border-radius: 0;
+  transform: translate(-50%, 0);
+}
+
+.cs-modal-controls {
+  position: absolute;
+  top: 0; right: 0;
+  z-index: 3;
+  display: flex;
+  gap: var(--space-1);
+  padding: var(--space-2);
+}
+.modal-icon-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--color-line);
+  background: rgba(250, 250, 248, 0.92);
+  backdrop-filter: blur(8px);
+  color: var(--color-ink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s var(--ease), border-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+.modal-icon-btn:hover { border-color: var(--color-accent); color: var(--color-accent); }
+.modal-icon-btn svg { width: 15px; height: 15px; }
+
+.cs-modal-body {
+  overflow-y: auto;
+  flex: 1;
+  padding: var(--space-5) var(--space-4) var(--space-4);
+}
+/* Expanded full-screen: align content to the same measure and gutters as the
+   rest of the site (.wrap — max 1240px, centered, 1.75rem gutters). */
+.cs-modal.maximized .cs-modal-body {
+  padding-left: max(var(--gutter), calc((100% - var(--max-width)) / 2 + var(--gutter)));
+  padding-right: max(var(--gutter), calc((100% - var(--max-width)) / 2 + var(--gutter)));
+}
+.cs-modal-body .cs-top { padding-top: var(--space-2); padding-bottom: 0; }
+/* Match the overview→cover gap to each section's text→media gap (space-2 + the
+   cover's own space-3 top margin), instead of the larger header padding. */
+.cs-modal-body .cs-overview { padding-bottom: var(--space-2); }
+.cs-modal-body .cs-next,
+.cs-modal-body .cs-nextprev { padding-bottom: var(--space-4); }
+
+/* ==========================================================================
+   Generic pages
+   ========================================================================== */
+.page-top { padding-top: calc(var(--space-6) + var(--space-2)); padding-bottom: var(--space-4); }
+.page-top h1 { max-width: 20ch; }
+
+.flow { max-width: 62ch; }
+.flow p { color: var(--color-ink-soft); }
+.flow p + p { margin-top: var(--space-2); }
+.flow h3 { margin-top: var(--space-5); margin-bottom: var(--space-2); }
+
+.plain-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--color-ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* Vertical stacked list — one item per line, a single hairline under the heading */
+.stack-list {
+  margin-top: var(--space-2);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--color-line);
+}
+.stack-list li {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-ink-soft);
+  padding: 5px 0;
+}
+
+/* "What I bring" — bold lead phrase + description, hairline-divided list */
+.brings-list {
+  margin-top: var(--space-2);
+  border-bottom: 1px solid var(--color-line);
+}
+.brings-list li {
+  padding: var(--space-2) 0;
+  border-top: 1px solid var(--color-line);
+  color: var(--color-ink-soft);
+  line-height: 1.55;
+  max-width: 60ch;
+}
+.brings-list li strong {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 var(--space-3);
+  margin-top: var(--space-2);
+  border-bottom: 1px solid var(--color-line);
+}
+.skills-grid li {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-ink-soft);
+  padding: 12px 0;
+  border-top: 1px solid var(--color-line);
+}
+
+.about-layout {
+  display: grid;
+  grid-template-columns: minmax(200px, 280px) 1fr;
+  gap: var(--space-5);
+  padding-top: var(--space-4);
+  padding-bottom: var(--space-6);
+}
+.about-layout .media {
+  aspect-ratio: 3/4;
+  background: var(--color-media-bg);
+  position: sticky;
+  top: var(--space-4);
+}
+.about-layout .media img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Experience timeline — vertical line with node markers, matching the CV.
+   The line "charges" to the accent color as it scrolls through view. */
+.timeline {
+  position: relative;
+  padding-left: 2.5rem;
+  padding-top: 0.4rem;
+}
+.timeline-track {
+  position: absolute;
+  left: 5px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background: var(--color-line);
+}
+.timeline-progress {
+  position: absolute;
+  left: 5px;
+  top: 6px;
+  width: 2px;
+  height: 0;
+  background: var(--color-accent);
+}
+.timeline-item {
+  position: relative;
+  padding-bottom: var(--space-5);
+  max-width: 62ch;
+}
+.timeline-item:last-child { padding-bottom: 0; }
+.timeline-dot {
+  position: absolute;
+  left: -2.5rem;
+  top: 4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color-bg);
+  border: 2px solid var(--color-line);
+  transition: border-color 0.4s var(--ease), background 0.4s var(--ease);
+  z-index: 1;
+}
+.timeline-item.charged .timeline-dot {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+}
+.timeline-item .period { color: var(--color-ink-soft); margin-bottom: var(--space-1); }
+.timeline-item h3 { margin-bottom: 2px; }
+.timeline-item .org { font-size: 0.9375rem; color: var(--color-ink-soft); margin-bottom: var(--space-2); }
+.timeline-item ul { margin-top: var(--space-1); }
+.timeline-item li {
+  position: relative;
+  padding-left: 1.1em;
+  color: var(--color-ink-soft);
+}
+.timeline-item li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--color-ink-faint);
+}
+.timeline-item li + li { margin-top: 6px; }
+
+.contact-layout {
+  padding-top: var(--space-4);
+  padding-bottom: var(--space-6);
+}
+.contact-list a {
+  width: 100%;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.8vw, 2rem);
+  font-weight: 500;
+  padding: var(--space-2) 0;
+  border-top: 1px solid var(--color-line);
+  transition: color 0.2s var(--ease);
+}
+.contact-list a:last-child { border-bottom: 1px solid var(--color-line); }
+.contact-list a:hover { color: var(--color-accent); }
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+@media (max-width: 860px) {
+  .site-nav { flex-wrap: wrap; }
+  .logo { order: 1; }
+  .nav-toggle { display: block; order: 2; }
+  .nav-links {
+    order: 3;
+    flex-basis: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    margin-top: 0;
+    transition: max-height 0.24s var(--ease), opacity 0.16s var(--ease), margin-top 0.24s var(--ease);
+  }
+  /* max-height kept close to the real content height (~120px) so closing
+     doesn't sit on empty space before it visibly collapses. */
+  .nav-links.open { max-height: 150px; opacity: 1; margin-top: var(--space-3); }
+  .nav-links a {
+    width: 100%;
+    padding: 10px 0;
+    border-top: 1px solid var(--color-line);
+  }
+  .nav-links a:first-child { border-top: none; }
+  .work-row .row-content { grid-template-columns: 3rem 1fr; }
+  .work-row .index-year { grid-column: 2/3; margin-top: 4px; }
+  .work-row .index-theme { grid-column: 2/3; }
+  .about-layout, .cs-media.split, .skills-grid { grid-template-columns: 1fr; }
+  .about-layout .media { position: static; }
+  .cs-modal {
+    top: 0;
+    left: 0;
+    width: 100vw;
+    max-height: 100vh;
+    height: 100vh;
+    border-radius: 0;
+    transform: translateY(12px);
+  }
+  .cs-modal.open { transform: translateY(0); }
+  .cs-modal .maximize-btn { display: none; }
+  .footer-line {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+  .footer-line > span:first-child,
+  .footer-line > span:nth-child(2),
+  .footer-line > span:last-child {
+    justify-self: unset;
+    text-align: left;
+  }
+}
