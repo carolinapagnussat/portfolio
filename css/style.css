@@ -1136,6 +1136,14 @@ body.modal-open .site-nav { display: none; }
   /* Tighter side gutters on phones — match the site-wide 1.75rem gutter
      instead of the roomier 3rem used in the floating desktop card. */
   .cs-modal-body { padding-left: var(--space-3); padding-right: var(--space-3); }
+  /* iOS Safari's translucent status/URL bars blur-sample the underlying scroll
+     document (the homepage), NOT the fixed modal on top — so the homepage bled
+     through at the top and bottom edges when a case study was open. Hide the
+     page content beneath the fullscreen modal so only the cream page background
+     shows behind the system bars. (Desktop keeps its dimmed-page backdrop.) */
+  body.modal-open > header,
+  body.modal-open > main,
+  body.modal-open > footer { visibility: hidden; }
   .footer-line {
     display: flex;
     flex-direction: column;
