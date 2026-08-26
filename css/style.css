@@ -220,15 +220,6 @@ h3, .h3 {
 .hero .mono { color: var(--color-ink-soft); margin-bottom: var(--space-3); }
 .hero h1 { max-width: 18ch; line-height: 1.1; }
 .hero .lede { margin-top: var(--space-4); }
-.hero .scroll-cue {
-  margin-top: var(--space-5);
-  font-family: var(--font-mono);
-  font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase;
-  color: var(--color-ink-faint);
-  display: flex;
-  align-items: center;
-  gap: var(--space-1);
-}
 
 /* ==========================================================================
    Work index — text list, no thumbnails inline. Numbers + titles + years.
