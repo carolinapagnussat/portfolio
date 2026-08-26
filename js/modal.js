@@ -4,6 +4,7 @@
   let backdrop, modal, body, maximizeBtn, closeBtn;
   let lightbox, lightboxContent;
   let currentSlug = null;
+  let nextprevObserver = null;
 
   const EXPAND_ICON = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M6 3H3v3M10 3h3v3M6 13H3v-3M10 13h3v-3"/></svg>';
   const COLLAPSE_ICON = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M3 6h3V3M13 6h-3V3M3 10h3v3M13 10h-3v3"/></svg>';
@@ -52,11 +53,12 @@
     // `video: true` renders as a clip instead of an image.
     if (media.type === "row") {
       const cells = media.items.map((it) => {
+        const cap = it.caption ? `<figcaption class="cs-caption">${it.caption}</figcaption>` : "";
         if (it.src && it.video) {
-          return `<div>${zoomable(videoTag(it.src, it.alt || alt))}</div>`;
+          return `<div>${zoomable(videoTag(it.src, it.alt || alt))}${cap}</div>`;
         }
         if (it.src) {
-          return `<div>${zoomable(imgTag(it.src, alt))}</div>`;
+          return `<div>${zoomable(imgTag(it.src, it.alt || alt))}${cap}</div>`;
         }
         return `<div class="ph-cell">${placeholderBox(it.note)}</div>`;
       }).join("");
@@ -152,7 +154,7 @@
       ${chaptersHtml}
       <div class="cs-nextprev">
         <div class="cs-nextprev-item">
-          <p class="mono">Preview</p>
+          <p class="mono">Previous</p>
           <button type="button" class="modal-nav-btn bubble-link" data-slug="${prev.slug}">${prev.title}<span class="bubble" aria-hidden="true"></span></button>
         </div>
         <div class="cs-nextprev-item">
@@ -167,6 +169,19 @@
         openModal(e.currentTarget.dataset.slug);
       });
     });
+
+    // Auto-reveal the prev/next accent bubble when it scrolls into view — mirrors
+    // the homepage "Let's talk" CTA, so the affordance shows on touch (no hover).
+    if (nextprevObserver) nextprevObserver.disconnect();
+    const navBtns = body.querySelectorAll(".cs-nextprev .bubble-link");
+    if ("IntersectionObserver" in window) {
+      nextprevObserver = new IntersectionObserver((entries) => {
+        entries.forEach((e) => e.target.classList.toggle("in-view", e.isIntersecting));
+      }, { root: body, threshold: 0.5 });
+      navBtns.forEach((btn) => nextprevObserver.observe(btn));
+    } else {
+      navBtns.forEach((btn) => btn.classList.add("in-view"));
+    }
 
     body.scrollTop = 0;
     body.dataset.case = project.slug; // enables per-case styling (e.g. media borders)

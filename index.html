@@ -6,7 +6,7 @@
 <title>Carolina Pagnussat — Product Designer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sintony:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -25,14 +25,12 @@
   <p class="mono reveal">Product Designer | Shopify &amp; eCommerce</p>
   <h1 class="reveal" style="transition-delay: 0.08s;">Designing eCommerce experiences that make people <span class="paint-word"><span>t</span><span>r</span><span>u</span><span>s</span><span>t</span></span> a brand — and buy from it.</h1>
   <p class="lede reveal" style="transition-delay: 0.18s;">Shopify and DTC specialist based in Porto Alegre, designing end-to-end eCommerce experiences for brands.</p>
-  <p class="scroll-cue reveal" style="transition-delay: 0.28s;">↓ Selected work</p>
 </header>
 
 <main>
   <section class="work-index wrap" id="work">
     <div class="work-index-head reveal">
       <h2>Work</h2>
-      <p class="mono">01 — 04</p>
     </div>
     <div id="work-list"></div>
   </section>
@@ -71,10 +69,8 @@
       <a class="work-row reveal" href="?case=${p.slug}" data-slug="${p.slug}">
         <div class="row-bg"><img src="${p.thumb}" alt="" loading="lazy"></div>
         <div class="row-content">
-          <span class="index-num">${String(i + 1).padStart(2, "0")}</span>
           <span class="index-title">${p.title}</span>
           <span class="index-theme">${p.theme}</span>
-          <span class="index-year">${p.year}</span>
         </div>
       </a>
     `).join("");

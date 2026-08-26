@@ -1,2 +1,5 @@
 .DS_Store
 **/.DS_Store
+
+# sandbox temp files from video encoder
+*.sb-*
