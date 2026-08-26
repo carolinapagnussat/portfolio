@@ -841,6 +841,10 @@ body.lightbox-open { overflow: hidden; }
 .modal-backdrop.open { opacity: 1; pointer-events: auto; }
 
 body.modal-open { overflow: hidden; }
+/* iOS Safari promotes the nav's backdrop-filter layer above the modal, so the
+   homepage bleeds through the translucent bar at the top. Hide the nav while a
+   case study is open — it's fully covered by the modal anyway. */
+body.modal-open .site-nav { display: none; }
 
 .cs-modal {
   position: fixed;
