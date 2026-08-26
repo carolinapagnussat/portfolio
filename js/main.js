@@ -24,7 +24,7 @@ function initNavToggle() {
 function initWorkScrollSpy() {
   const workSection = document.getElementById("work");
   const closing = document.querySelector(".closing");
-  const workLink = document.querySelector('.nav-links a[href="#work"]');
+  const workLink = document.querySelector('.nav-links a[href="/work"]');
   if (!workSection || !workLink) return;
 
   function update() {
@@ -68,12 +68,11 @@ function initClock() {
 }
 
 function highlightActiveNavLink() {
-  const path = window.location.pathname.split("/").pop() || "index.html";
+  // Clean paths: /about, /contact, /work. The homepage (/) and case pages
+  // (/case-*) leave Work to the scroll-spy instead of a static highlight.
+  const path = window.location.pathname.replace(/\/+$/, "") || "/";
   document.querySelectorAll(".nav-links a").forEach((link) => {
-    const href = link.getAttribute("href");
-    if (href === path || (path === "" && href === "index.html")) {
-      link.classList.add("active");
-    }
+    if (link.getAttribute("href") === path) link.classList.add("active");
   });
 }
 
@@ -214,11 +213,30 @@ function initCtaReveal() {
   observer.observe(cta);
 }
 
+// The Work nav item points at /work (a rewrite of the homepage). On the
+// homepage we intercept it for a smooth in-page scroll and update the URL;
+// arriving at /work directly just brings the work section into view.
+function initWorkLink() {
+  const workSection = document.getElementById("work");
+  if (!workSection) return; // only present on the homepage
+  if (window.location.pathname.replace(/\/+$/, "") === "/work") {
+    requestAnimationFrame(() => workSection.scrollIntoView());
+  }
+  document.querySelectorAll('a[href="/work"]').forEach((a) => {
+    a.addEventListener("click", (e) => {
+      e.preventDefault();
+      workSection.scrollIntoView({ behavior: "smooth" });
+      history.pushState({}, "", "/work");
+    });
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   initNavToggle();
   initClock();
   highlightActiveNavLink();
   initWorkScrollSpy();
+  initWorkLink();
   initReveal();
   initWorkTouchReveal();
   initCtaReveal();

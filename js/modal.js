@@ -1,10 +1,18 @@
 // Case-study "box": opens a project over the dimmed homepage, can be
-// maximized or closed, and keeps the URL shareable via ?case=<slug>.
+// maximized or closed, and keeps the URL shareable via /case-<slug>.
 (function () {
   let backdrop, modal, body, maximizeBtn, closeBtn;
   let lightbox, lightboxContent;
   let currentSlug = null;
   let nextprevObserver = null;
+
+  // The shareable case URL is the clean path /case-<slug> (served by a Vercel
+  // rewrite). Old ?case=<slug> links are still honoured for backward compat.
+  function slugFromLocation() {
+    const m = window.location.pathname.match(/^\/case-([a-z0-9-]+)\/?$/i);
+    if (m) return m[1];
+    return new URLSearchParams(window.location.search).get("case");
+  }
 
   const EXPAND_ICON = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M6 3H3v3M10 3h3v3M6 13H3v-3M10 13h3v-3"/></svg>';
   const COLLAPSE_ICON = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M3 6h3V3M13 6h-3V3M3 10h3v3M13 10h-3v3"/></svg>';
@@ -200,7 +208,7 @@
     document.title = `${project.title} — Carolina Pagnussat`;
 
     if (opts.push !== false) {
-      history.pushState({ case: slug }, "", `?case=${slug}`);
+      history.pushState({ case: slug }, "", `/case-${slug}`);
     }
   }
 
@@ -214,7 +222,7 @@
     currentSlug = null;
 
     if (opts.push !== false) {
-      history.pushState({}, "", window.location.pathname);
+      history.pushState({}, "", "/");
     }
   }
 
@@ -302,8 +310,7 @@
     });
 
     window.addEventListener("popstate", () => {
-      const params = new URLSearchParams(window.location.search);
-      const slug = params.get("case");
+      const slug = slugFromLocation();
       if (slug && slug !== currentSlug) {
         openModal(slug, { push: false });
       } else if (!slug && currentSlug) {
@@ -311,8 +318,14 @@
       }
     });
 
-    const initialSlug = new URLSearchParams(window.location.search).get("case");
-    if (initialSlug) openModal(initialSlug, { push: false });
+    const initialSlug = slugFromLocation();
+    if (initialSlug) {
+      openModal(initialSlug, { push: false });
+      // Upgrade an old shared ?case=<slug> link to the clean /case-<slug> path.
+      if (/[?&]case=/.test(window.location.search)) {
+        history.replaceState({ case: initialSlug }, "", `/case-${initialSlug}`);
+      }
+    }
   }
 
   document.addEventListener("DOMContentLoaded", initModal);

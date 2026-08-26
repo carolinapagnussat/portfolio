@@ -12,11 +12,11 @@
 <body>
 
 <nav class="site-nav">
-  <a href="index.html" class="logo">Carolina Pagnussat</a>
+  <a href="/" class="logo">Carolina Pagnussat</a>
   <div class="nav-links">
-    <a href="#work">Work</a>
-    <a href="about.html">About</a>
-    <a href="contact.html">Contact</a>
+    <a href="/work">Work</a>
+    <a href="/about">About</a>
+    <a href="/contact">Contact</a>
   </div>
   <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false"><span></span></button>
 </nav>
@@ -37,7 +37,7 @@
 
   <section class="closing wrap">
     <p class="mono reveal" style="color: var(--color-ink-soft); margin-bottom: var(--space-2);">Get in touch</p>
-    <a href="contact.html" class="big-link bubble-link reveal">Let's talk<span class="bubble" aria-hidden="true"></span></a>
+    <a href="/contact" class="big-link bubble-link reveal">Let's talk<span class="bubble" aria-hidden="true"></span></a>
   </section>
 </main>
 
@@ -66,7 +66,7 @@
     const list = document.getElementById("work-list");
     if (!list) return;
     list.innerHTML = PROJECTS.map((p, i) => `
-      <a class="work-row reveal" href="?case=${p.slug}" data-slug="${p.slug}">
+      <a class="work-row reveal" href="/case-${p.slug}" data-slug="${p.slug}">
         <div class="row-bg"><img src="${p.thumb}" alt="" loading="lazy"></div>
         <div class="row-content">
           <span class="index-title">${p.title}</span>
