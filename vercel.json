@@ -2,7 +2,7 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/case-:slug", "destination": "/index.html" },
-    { "source": "/work", "destination": "/index.html" }
+    { "source": "/case-:slug", "destination": "/" },
+    { "source": "/work", "destination": "/" }
   ]
 }
