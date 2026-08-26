@@ -1129,6 +1129,9 @@ body.modal-open { overflow: hidden; }
   }
   .cs-modal.open { transform: translateY(0); }
   .cs-modal .maximize-btn { display: none; }
+  /* Tighter side gutters on phones — match the site-wide 1.75rem gutter
+     instead of the roomier 3rem used in the floating desktop card. */
+  .cs-modal-body { padding-left: var(--space-3); padding-right: var(--space-3); }
   .footer-line {
     display: flex;
     flex-direction: column;
