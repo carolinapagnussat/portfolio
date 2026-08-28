@@ -10,8 +10,9 @@ const EXPERIENCE = [
     period: "Aug 2025 — Present",
     bullets: [
       "Design of websites, landing pages, and digital interfaces focused on usability, visual clarity, and conversion.",
-      "Creation of internal communication and marketing materials for the Incentive.me app, including email campaigns, presentations, and strategic assets.",
-      "Collaboration with marketing, product, and engineering teams to deliver digital solutions across different industries.",
+      "Brand and campaign systems for national and multinational clients — including Pirelli's incentive program language, C&amp;A's internal sub-brand, Bayer's campaign architecture, and AI-assisted content workflows for Magalu.",
+      "Communication and training materials for Incentive.me, including a new training format for app rollout, email campaigns, and strategic assets.",
+      "Cross-functional collaboration with marketing, product, and engineering teams across digital products and channels.",
       "Responsible for maintaining visual consistency and brand standards across digital products and communication channels."
     ]
   },
