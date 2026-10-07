@@ -133,7 +133,7 @@ const PROJECTS = [
         ],
         media: { type: "stack", items: [
           { video: true, src: "assets/studio-ima-audit.mp4", caption: "The full UX audit walkthrough — the audited store's breaks: no homepage, no filters, the scattered “Sobre” page, and the bare product page." },
-          { src: "assets/studio-ima-flow.png", caption: "Before → after user flow across the four stages — Discovery · Connection · Trust · Decision. The old store skipped straight to the decision; the redesign makes each stage prepare the next." }
+          { src: "assets/studio-ima-flow.png", caption: "Before → after user flow across the four stages. Discovery → Connection → Trust → Decision. The old store skipped straight to the decision; the redesign makes each stage prepare the next." }
         ] }
       },
       {
