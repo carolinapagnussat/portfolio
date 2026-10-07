@@ -131,7 +131,10 @@ const PROJECTS = [
           { title: "Meaning scattered", text: "The brand's richest asset — its story of materials, process, and origin — lived on the “Sobre” page as an unstructured stream. Strong, authentic content, but with no hierarchy, no journey, and no connection to the rest of the store." },
           { title: "Decision without confidence", text: "At the moment of decision, the store gave the least support: a bare technical description with no storytelling to justify a one-of-a-kind price, no social proof, no in-context imagery, no delivery or returns clarity near the CTA, no related products. The cart had the same gaps. The two stages where confidence matters most offered the least." }
         ],
-        media: { type: "single", video: true, src: "assets/studio-ima-audit.mp4", note: "The full UX audit walkthrough — the audited store's breaks: no homepage, no filters, the scattered “Sobre” page, and the bare product page." }
+        media: { type: "stack", items: [
+          { video: true, src: "assets/studio-ima-audit.mp4", caption: "The full UX audit walkthrough — the audited store's breaks: no homepage, no filters, the scattered “Sobre” page, and the bare product page." },
+          { src: "assets/studio-ima-flow.png", caption: "Before → after user flow across the four stages — Discovery · Connection · Trust · Decision. The old store skipped straight to the decision; the redesign makes each stage prepare the next." }
+        ] }
       },
       {
         heading: "Key reasoning moments",
