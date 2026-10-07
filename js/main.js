@@ -231,9 +231,21 @@ function initWorkLink() {
   });
 }
 
+// Auto-updating year counts (e.g. "10 years in design") — ticks up every
+// January. Each span carries its start year in data-years-since; the markup
+// also holds the current value as a no-JS fallback.
+function initYearCounters() {
+  const now = new Date().getFullYear();
+  document.querySelectorAll("[data-years-since]").forEach((el) => {
+    const start = parseInt(el.getAttribute("data-years-since"), 10);
+    if (!isNaN(start)) el.textContent = String(now - start);
+  });
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   initNavToggle();
   initClock();
+  initYearCounters();
   highlightActiveNavLink();
   initWorkScrollSpy();
   initWorkLink();
