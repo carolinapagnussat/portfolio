@@ -56,6 +56,7 @@ const PROJECTS = [
           { title: "Brands", text: "20 luxury labels, each its own subcategory, for loyal customers who already shop by name." }
         ],
         media: { type: "stack", items: [
+          { src: "assets/celadon-sitemap.png", caption: "Full site map — the information architecture I designed: three parallel entry points (Collections · Products · Brands) feeding shared collection, category, and product pages, over a reusable taxonomy layer built to grow with the catalog." },
           { src: "assets/celadon-nav-collections.jpg", caption: "Collections — brand-aligned verbs (Servir · Brindar · Decorar · Perfumar) to shop by occasion." },
           { src: "assets/celadon-nav-products.jpg", caption: "Products — clear, SEO-optimized categories (Mesa · Bar · Decoração · Perfumaria) for shoppers with a specific item in mind." },
           { src: "assets/celadon-nav-brands.jpg", caption: "Brands — 20 luxury labels, each its own subcategory, for customers who shop by name." }
