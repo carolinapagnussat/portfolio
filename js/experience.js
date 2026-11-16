@@ -12,7 +12,7 @@ const EXPERIENCE = [
       "Design of websites, landing pages, and digital interfaces focused on usability, visual clarity, and conversion.",
       "Brand and campaign systems for national and multinational clients — including Pirelli's incentive program language, C&amp;A's internal sub-brand, Bayer's campaign architecture, and AI-assisted content workflows for Magalu.",
       "Communication and training materials for Incentive.me, including a new training format for app rollout, email campaigns, and strategic assets.",
-      "Cross-functional collaboration with marketing, product, and engineering teams across digital products and channels.",
+      "Cross-functional collaboration with marketing, product, and engineering teams.",
       "Responsible for maintaining visual consistency and brand standards across digital products and communication channels."
     ]
   },
@@ -20,10 +20,12 @@ const EXPERIENCE = [
     role: "Product Designer | UX/UI",
     org: "TartariTech",
     type: "Contract",
-    period: "May 2024 — Dec 2025",
+    period: "May 2024 — Oct 2026",
     bullets: [
       "Led UX/UI for Shopify redesigns, migrations, and CRO across 10+ DTC stores.",
       "Designed the navigation and information architecture for a luxury tableware brand's move to Shopify (~900 SKUs); the store exceeded its first-year revenue projection by ~75%.",
+      "Led the Shopify redesign of a footwear brand, repositioning it into a bridal niche; the store hit its annual revenue goal and has grown ~10% a year since.",
+      "Designed a custom product page, from the design system and end-to-end UX to developer handoff.",
       "Built scalable taxonomies and product-page structures (metafields/metaobjects) made to grow with the catalog.",
       "Collaborated closely with developers, marketing teams, and product stakeholders to ship user-centered, conversion-focused solutions."
     ]
